@@ -77,7 +77,9 @@ const game = () => {
     wins += test;
   }
   console.log(wins);
-  if (wins > 0) {
+  if (wins === 0) {
+    return 'Draw, no winners!';
+  } else if (wins > 0) {
     return `You are the winner`;
   } else {
     return 'You are the loser';
