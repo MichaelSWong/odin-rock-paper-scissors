@@ -1,0 +1,40 @@
+#title,
+#end-results  {
+    text-align: center;
+}
+#title {
+    font-size: 70px;
+}
+#btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: auto;
+    margin-bottom: 20px;
+    gap: 16px
+};
+
+
+#end-results {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    margin: 10px;
+    font-size: 50px;
+}
+
+#score-container, #score-label{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 0px 10px;
+}
+
+#result-container {
+    font-size: 30px;
+    padding: 10px;
+    margin: 10px;
+}

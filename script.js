@@ -1,3 +1,7 @@
+let computerScore = 0;
+let playerScore = 0;
+const endResults = document.querySelector('#end-results');
+
 const getComputerChoice = () => {
   const number = Math.ceil(Math.random() * 3);
   let result = '';
@@ -17,73 +21,63 @@ const getComputerChoice = () => {
   return result;
 };
 
+const results = document.querySelector('#result-container');
+results.style.cssText =
+  'color: red; display: flex; justify-content: center; align-items: center';
+
 const playRound = (playerSelection, computerSelection) => {
-  if (computerSelection === 'rock') {
-    if (playerSelection.toLowerCase() === 'rock') {
-      console.log('Draw, No Winner!!');
-      return 0;
-    } else if (playerSelection.toLowerCase() === 'paper') {
-      console.log(
-        `You Win, ${playerSelection.toUpperCase()} beats ${computerSelection.toUpperCase()}!!`
-      );
-      return 1;
-    } else {
-      console.log(
-        `You Lose, ${computerSelection.toUpperCase()} beats ${playerSelection.toUpperCase()}!!`
-      );
-      return -1;
-    }
-  } else if (computerSelection === 'paper') {
-    if (playerSelection.toLowerCase() === 'paper') {
-      console.log('Draw, No Winner!!');
-      return 0;
-    } else if (playerSelection.toLowerCase() === 'scissors') {
-      console.log(
-        `You Win, ${playerSelection.toUpperCase()} beats ${computerSelection.toUpperCase()}!!`
-      );
-      return 1;
-    } else {
-      console.log(
-        `You Lose, ${computerSelection.toUpperCase()} beats ${playerSelection.toUpperCase()}!!`
-      );
-      return -1;
-    }
+  if (playerSelection === computerSelection) {
+    results.textContent = 'Draw, No Winner!!';
+  } else if (
+    (computerSelection === 'rock' && playerSelection === 'paper') ||
+    (computerSelection === 'paper' && playerSelection === 'scissors') ||
+    (computerSelection === 'scissors' && playerSelection === 'rock')
+  ) {
+    results.textContent = `You Lose, ${computerSelection.toUpperCase()} beats ${playerSelection.toUpperCase()}!!`;
+    computerScore++;
+    keepComputerScore();
   } else {
-    if (playerSelection.toLowerCase() === 'scissors') {
-      console.log('Draw, No Winner!!');
-      return 0;
-    } else if (playerSelection.toLowerCase() === 'rock') {
-      console.log(
-        `You Win, ${playerSelection.toUpperCase()} beats ${computerSelection.toUpperCase()}!!`
-      );
-      return 1;
-    } else {
-      console.log(
-        `You Lose, ${computerSelection.toUpperCase()} beats ${playerSelection.toUpperCase()}!!`
-      );
-      return -1;
-    }
+    results.textContent = `You Win, ${playerSelection.toUpperCase()} beats ${computerSelection.toUpperCase()}!!`;
+    playerScore++;
+    keepPlayerScore();
   }
 };
 
-const game = () => {
-  let wins = 0;
-  for (let i = 0; i < 5; i++) {
-    let playerSelection = prompt('Please enter Rock, Paper or Scissors: ');
+const buttons = document.querySelectorAll('button');
+buttons.forEach((button) => {
+  button.addEventListener('click', () => {
     const computerSelection = getComputerChoice();
-    console.log({ wins });
-    const test = playRound(playerSelection, computerSelection);
-    console.log(typeof test);
-    wins += test;
-  }
-  console.log(wins);
-  if (wins === 0) {
-    return 'Draw, no winners!';
-  } else if (wins > 0) {
-    return `You are the winner`;
-  } else {
-    return 'You are the loser';
-  }
+    console.log({ computerSelection });
+    console.log(button.id);
+    playRound(button.id, computerSelection);
+    if (playerScore === 5 || computerScore === 5) {
+      declareWinner();
+    }
+  });
+});
+
+const keepComputerScore = () => {
+  let computerScoreBox = document.querySelector('#computer-score');
+  computerScoreBox.textContent = computerScore;
+};
+const keepPlayerScore = () => {
+  let playerScoreBox = document.querySelector('#player-score');
+  playerScoreBox.textContent = playerScore;
 };
 
-console.log(game());
+const declareWinner = () => {
+  if (playerScore > computerScore) {
+    endResults.textContent = 'You Win!!';
+  } else endResults.tex = 'You Lost!';
+  results.textContent = '';
+  resetGame();
+};
+
+const resetGame = () => {
+  playerScore = 0;
+  computerScore = 0;
+  endResults = '';
+  results = '';
+};
+
+// console.log(game());
